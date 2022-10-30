@@ -58,7 +58,7 @@ function filterItems(data: apiDataObject[]) {
 }
 
 // get and modify data according to the search query
-async function getData() {
+async function getData(): Promise<void> {
 
     try {
         const res: Response = await fetch('https://hp-api.herokuapp.com/api/characters')
