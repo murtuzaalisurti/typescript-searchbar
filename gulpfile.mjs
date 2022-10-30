@@ -15,7 +15,7 @@ function browsersync() {
         },
         notify: false
     }, (err, instance) => {
-        console.log(err, instance.active)
+        console.log(`Error:- ${err}, \n${instance.active ? `An instance is active` : `No active instance`}\n`)
     })
 }
 

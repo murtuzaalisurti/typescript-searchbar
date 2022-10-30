@@ -4,11 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "gulp",
-    "serve": "gulp watch",
-    "ts": "tsc -w",
-    "minjs": "npx terser public/main.js --compress --mangle --output public/main.min.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "gulp",
+    "ts": "tsc -w"
   },
   "keywords": [],
   "author": "",
