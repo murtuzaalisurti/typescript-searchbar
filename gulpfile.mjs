@@ -1,9 +1,12 @@
 import gulp from "gulp"
+import gulpTS from 'gulp-typescript'
 import browserSync from "browser-sync"
-browserSync.create()
 
-gulp.task('default', () => {
-    browserSync.init({
+browserSync.create()
+const tsProject = gulpTS.createProject("tsconfig.json")
+
+function browsersync() {
+    return browserSync.init({
         watch: true,
         server: {
             baseDir: './public'
@@ -12,4 +15,14 @@ gulp.task('default', () => {
     }, (err, instance) => {
         console.log(err, instance.active)
     })
-})
+}
+
+function compileTS() {
+    return tsProject.src().pipe(tsProject()).js.pipe(gulp.dest("public"))
+}
+
+function tsWatch() {
+    return gulp.watch('src/main.ts', compileTS)
+}
+
+export default gulp.series(compileTS, gulp.parallel(tsWatch, browsersync))
