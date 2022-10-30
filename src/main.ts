@@ -61,7 +61,7 @@ function filterItems(data: apiDataObject[]) {
 async function getData() {
 
     try {
-        const res = await fetch('https://hp-api.herokuapp.com/api/characters')
+        const res: Response = await fetch('https://hp-api.herokuapp.com/api/characters')
         const data: apiDataObject[] = await res.json()
         message.textContent = ""
 

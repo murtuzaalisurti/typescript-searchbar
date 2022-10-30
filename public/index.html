@@ -5,9 +5,55 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Functionality in TypeScript</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            color: rgba(240, 248, 255, 0.71);
+            background-color: rgb(22, 22, 22);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        input[type="search"] {
+            outline: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            width: 100%;
+            max-width: 20rem;
+            text-align: center;
+            border-radius: 0.4rem;
+            background-color: rgb(53, 53, 53);
+        }
+
+        input[type="search"]::placeholder {
+            text-align: center;
+        }
+
+        li {
+            list-style-type: none;
+            text-decoration: none;
+            margin-bottom: 1rem;
+            padding: 1rem 1rem;
+            border-radius: 0.3rem;
+            background-color: rgba(66, 66, 66, 0.179);
+        }
+
+        .listContain {
+            padding: 4rem 0;
+            max-width: max-content;
+        }
+    </style>
 </head>
 <body>
-    <input type="search" placeholder="Search" id="search" name="search">
+    <input type="search" placeholder="Search" id="search" name="search" autocomplete="off">
     <div class="listContain">
         <p class="message"></p>
         <ul class="listItems"></ul>
