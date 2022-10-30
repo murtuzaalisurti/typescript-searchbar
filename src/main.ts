@@ -1,5 +1,16 @@
-// search bar
+/* 
+* search bar implementation - ts
+? author: Murtuzaali Surti - github:- murtuzaalisurti
+* api: https://hp-api.herokuapp.com/api/characters 
+*/
 
+// selectors
+const searchBar = document.querySelector("input") as HTMLInputElement
+const listContain = document.querySelector(".listContain") as HTMLDivElement
+const unorderedList = document.querySelector('ul') as HTMLUListElement
+const message = document.querySelector(".message") as HTMLParagraphElement
+
+// api response type
 type apiDataObject = {
     actor: string,
     alive: boolean,
@@ -26,31 +37,44 @@ type apiDataObject = {
     yearOfBirth: number
 }
 
-const body = document.querySelector("body") as HTMLBodyElement
-const searchBar = document.querySelector("input") as HTMLInputElement
-const apiDataListContain = document.createElement("div") as HTMLDivElement
-const newList = document.createElement('ul') as HTMLUListElement
+message.textContent = "Loading"
 
+// function to display list items
+function displayItems(data: apiDataObject[]): void {
+    unorderedList.innerHTML = ""
 
-apiDataListContain.textContent = "Loading"
-body.appendChild(apiDataListContain)
-
-searchBar.addEventListener("keyup", (e: Event): void => {
-    console.log(searchBar.value)
-})
-
-
-fetch('https://hp-api.herokuapp.com/api/characters').then((res: Response) => {
-    return res.json()
-}).then((data: apiDataObject[]) => {
-    apiDataListContain.textContent = ""
-    data.forEach((element) => {
+    data.forEach((element: apiDataObject) => {
         const listItem = document.createElement('li') as HTMLLIElement
         listItem.textContent = element.name
-        newList.appendChild(listItem)
-        // console.log(listItem)
-        
+        unorderedList.appendChild(listItem)
     });
+}
 
-    apiDataListContain.appendChild(newList)
-})
+// filter items based on search query
+function filterItems(data: apiDataObject[]) {
+    return data.filter((element: apiDataObject) => {
+        return (element.name.toLowerCase().includes(searchBar.value.toLowerCase()))
+    })
+}
+
+// get and modify data according to the search query
+async function getData() {
+
+    try {
+        const res = await fetch('https://hp-api.herokuapp.com/api/characters')
+        const data: apiDataObject[] = await res.json()
+        message.textContent = ""
+
+        displayItems(data)
+
+        searchBar.addEventListener("keyup", (e: Event): void => {
+            const filtered = filterItems(data)
+            displayItems(filtered)
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+getData()
