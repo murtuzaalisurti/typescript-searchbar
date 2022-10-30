@@ -9,7 +9,7 @@ const searchBar = document.querySelector("input") as HTMLInputElement
 const listContain = document.querySelector(".listContain") as HTMLDivElement
 const unorderedList = document.querySelector('ul') as HTMLUListElement
 const message = document.querySelector(".message") as HTMLParagraphElement
-console.log('hey');
+
 // api response type
 type apiDataObject = {
     actor: string,
