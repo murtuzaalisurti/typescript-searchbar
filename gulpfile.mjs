@@ -1,5 +1,7 @@
 import gulp from "gulp"
 import gulpTS from 'gulp-typescript'
+import terser from "gulp-terser"
+import rename from "gulp-rename"
 import browserSync from "browser-sync"
 
 browserSync.create()
@@ -18,11 +20,15 @@ function browsersync() {
 }
 
 function compileTS() {
-    return tsProject.src().pipe(tsProject()).js.pipe(gulp.dest("public"))
+    return tsProject.src().pipe(tsProject()).js.pipe(gulp.dest("./public"))
+}
+
+function minifyJS() {
+    return gulp.src('./public/main.js').pipe(terser()).pipe(rename({ suffix: '.min' })).pipe(gulp.dest("./public"))
 }
 
 function tsWatch() {
-    return gulp.watch('src/main.ts', compileTS)
+    return gulp.watch('src/main.ts', gulp.series(compileTS, minifyJS))
 }
 
-export default gulp.series(compileTS, gulp.parallel(tsWatch, browsersync))
+export default gulp.series(compileTS, minifyJS, gulp.parallel(tsWatch, browsersync))
