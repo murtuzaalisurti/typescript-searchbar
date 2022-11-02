@@ -57,12 +57,25 @@ function filterItems(data: apiDataObject[]) {
     })
 }
 
+// wrapper function implementation
+async function makeRequest<TResponse>(url: string, config: RequestInit = {}): Promise<TResponse> {
+    return fetch(url, config).then(res => res.json()).then(data => data as TResponse).catch(err => err instanceof Error ? (`${err.message}\n ${err.stack}`) : err)
+}
+
 // get and modify data according to the search query
 async function getData(): Promise<void> {
 
     try {
-        const res: Response = await fetch('https://hp-api.herokuapp.com/api/characters')
-        const data: apiDataObject[] = await res.json()
+        // const res: Response = await fetch('https://hp-api.herokuapp.com/api/characters')
+        // const data: apiDataObject[] = await res.json()
+
+        /*
+        * OR 
+        */
+
+        // generic function
+        const data = await makeRequest<apiDataObject[]>('https://hp-api.herokuapp.com/api/characters')
+        
         message.textContent = ""
 
         displayItems(data)
