@@ -67,11 +67,11 @@ async function makeRequest<TResponse>(url: string, config: RequestInit = {}): Pr
 /*
 * wrapper function with async await and function signature ---------------------------------------------------------
 */
-// function signature
-let fetchFunction: <TResponse>(url: string, config?: RequestInit) => Promise<TResponse>
+// type alias
+type typedFetchFunction = <TResponse>(url: string, config?: RequestInit) => Promise<TResponse>
 
 // decalring the function
-fetchFunction = async <TResponse>(url: string, config: RequestInit = {}): Promise<TResponse> => {
+const fetchFunction: typedFetchFunction = async <TResponse>(url: string, config: RequestInit = {}): Promise<TResponse> => {
     try {
         const res = await fetch(url, config)
         const data: TResponse = await res.json()
