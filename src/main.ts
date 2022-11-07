@@ -57,9 +57,28 @@ function filterItems(data: apiDataObject[]) {
     })
 }
 
-// wrapper function implementation
+/*
+* a simple wrapper function implementation with then method ---------------------------------------------------------
+*/
 async function makeRequest<TResponse>(url: string, config: RequestInit = {}): Promise<TResponse> {
     return fetch(url, config).then(res => res.json()).then(data => data as TResponse).catch(err => err instanceof Error ? (`${err.message}\n ${err.stack}`) : err)
+}
+
+/*
+* wrapper function with async await and function signature ---------------------------------------------------------
+*/
+// function signature
+let fetchFunction: <TResponse>(url: string, config?: RequestInit) => Promise<TResponse>
+
+// decalring the function
+fetchFunction = async <TResponse>(url: string, config: RequestInit = {}): Promise<TResponse> => {
+    try {
+        const res = await fetch(url, config)
+        const data: TResponse = await res.json()
+        return data as TResponse
+    } catch (error) {
+        return Promise.reject(error)
+    }
 }
 
 // get and modify data according to the search query
@@ -74,7 +93,7 @@ async function getData(): Promise<void> {
         */
 
         // generic function
-        const data = await makeRequest<apiDataObject[]>('https://hp-api.herokuapp.com/api/characters')
+        const data = await fetchFunction<apiDataObject[]>('https://hp-api.herokuapp.com/api/characters')
         
         message.textContent = ""
 
