@@ -13,6 +13,7 @@ function browsersync() {
         server: {
             baseDir: './public'
         },
+        reloadDelay: 3000,
         notify: false
     }, (err, instance) => {
         console.log(`Error:- ${err}, \n${instance.active ? `An instance is active` : `No active instance`}\n`)
@@ -31,4 +32,6 @@ function tsWatch() {
     return gulp.watch('src/main.ts', gulp.series(compileTS, minifyJS))
 }
 
-export default gulp.series(compileTS, minifyJS, gulp.parallel(tsWatch, browsersync))
+export const watch = gulp.parallel(tsWatch, browsersync)
+export default gulp.series(compileTS, minifyJS, browsersync)
+// export default gulp.series(compileTS, minifyJS, gulp.parallel(tsWatch, browsersync))

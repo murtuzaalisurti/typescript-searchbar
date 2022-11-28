@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "gulp",
+    "serve": "gulp watch",
     "ts": "tsc -w"
   },
   "keywords": [],
